@@ -1,0 +1,15 @@
+<html>
+<head>
+<title>Setup VoiceBridge</title>
+	<script type="text/javascript" src="swfobject.js"></script>
+</head>
+<body topmargin="0" leftmargin="0" bottommargin="0" rightmargin="0">
+<div id="setupDIV"></div>
+<script type="text/javascript">
+		fo = new SWFObject("setup.swf", "setupID", "100%", "100%", "9");
+		fo.addParam("swLiveConnect", "true");
+		fo.addParam("name", "setupID");
+		fo.write("setupDIV");
+</script>
+</body>
+</html>

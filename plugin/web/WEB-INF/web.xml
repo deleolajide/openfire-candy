@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<web-app>
+	<servlet>
+		<servlet-name>candyAdmin</servlet-name>
+		<servlet-class>com.ifsoft.candy.servlet.CandyAdmin</servlet-class>
+	</servlet>
+
+	<servlet-mapping>
+		<servlet-name>candyAdmin</servlet-name>
+		<url-pattern>/candy-properties</url-pattern>
+	</servlet-mapping>
+	
+</web-app>

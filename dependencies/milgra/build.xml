@@ -1,0 +1,51 @@
+<project name="milgra" default="jar" basedir=".">
+
+	<!-- Application variables -->
+	<property name="app.jar" value="milgra.jar"/>
+	<property name="app.src" value="src"/>
+	<property name="app.bin" value="bin"/>
+
+	<!-- Specify compiler options -->
+	<property name="build.compiler"	value="modern" />
+	<property name="build.debug" value="off" />
+	<property name="build.optimize" value="on" />
+	<property name="build.deprecation" value="on" />
+
+	<!-- Build targets -->
+	<target name="clean" description="Destroys all generated files and dirs.">
+		<delete dir="${app.bin}"/>
+		<delete file="${app.jar}"/>
+	</target>
+
+	<target name="prepare" description="Prepares build environment.">
+		<!-- Make sure needed directories are created -->
+		<mkdir dir="${app.bin}"/>
+		
+		<!-- Set up build classpath -->
+		<path id="buildclasspath">
+			<!-- Include this application's compiled classes -->
+			<pathelement location="${app.bin}"/>
+		</path>
+			
+		<pathconvert pathsep=":" property="build.classpath" refid="buildclasspath"/>
+	</target>
+
+	<target name="compile" depends="prepare" description="Compiles Java code, output goes to the build dir.">
+		<javac srcdir="${app.src}"
+			destdir="${app.bin}"
+			classpath="${build.classpath}"
+			debug="${build.debug}"
+			optimize="${build.optimize}"
+			deprecation="${build.deprecation}"
+		/>
+		
+		<copy todir="${app.bin}">
+			<fileset dir="${app.src}" includes="**/*.properties, **/*.xml"/>
+		</copy>
+	</target>
+
+	<target name="jar" depends="compile" description="Gathers compiled Java classes into a JAR file.">
+		<jar destfile="./${app.jar}" basedir="${app.bin}"/>
+	</target>
+
+</project>
