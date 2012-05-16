@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<title>Candy - Chats are not dead yet</title>
+	<link rel="shortcut icon" href="../res/img/favicon.png" type="image/gif" />
+	<link rel="stylesheet" type="text/css" href="../res/default.css" />
+	<link rel="stylesheet" type="text/css" href="../plugins/colors/candy.css" />
+	<!--link rel="stylesheet" type="text/css" href="../plugins/inline-images/candy.css" />
+	<link rel="stylesheet" type="text/css" href="../plugins/jquery-ui/ui-lightness/css/ui-lightness.css" /-->
+	<link rel="stylesheet" type="text/css" href="../plugins/roomPanel/default.css" />
+	<link rel="stylesheet" type="text/css" href="../plugins/timeago/candy.css" />
+
+	<script type="text/javascript" src="../libs/jquery.min.js"></script>
+	<script type="text/javascript" src="../libs/libs.bundle.js"></script>
+	<!--script type="text/javascript" src="../libs/strophe-connection-websockets.js"></script-->
+	<script type="text/javascript" src="../libs/strophe-connection-bosh.js"></script>
+	<script type="text/javascript" src="../libs/strophe-openlink.js"></script>
+	<script type="text/javascript" src="../candy.bundle.js"></script>
+	<script type="text/javascript" src="../plugins/colors/candy.js"></script>
+	<script type="text/javascript" src="../plugins/inline-images/candy.js"></script>
+	<script type="text/javascript" src="../plugins/roomPanel/roomPanel.js"></script>
+	<script type="text/javascript" src="../plugins/timeago/candy.js"></script>
+	<script type="text/javascript" src="../plugins/voicebridge/swfobject.js"></script>
+	<script type="text/javascript" src="../plugins/voicebridge/candy.js"></script>
+
+	<script type="text/javascript">
+		$(document).ready(function() {
+			Candy.init('/http-bind/', {
+				core: { debug: false },
+				view: { resources: '../res/' }
+			});
+
+			CandyShop.Colors.init();
+			//CandyShop.InlineImages.init();
+
+			CandyShop.RoomPanel.init({
+				// domain that hosts the muc rooms, only required if autoDetectRooms is enabled
+				mucDomain: 'conference.' + window.location.hostname,
+
+				// show room list if all rooms are closed, default value is true. [optional]
+				showIfAllTabClosed: true,
+
+				// detect rooms before showing list, default value is true. [optional]
+				autoDetectRooms: true,
+
+				// how long in seconds before refreshing room list, default value is 600. [optional]
+				roomCacheTime: 600
+			});
+
+			CandyShop.Timeago.init();
+
+			// uncomment and edit to use a SIP phone for audio-conferencing (voip phone).
+			// voicebridge will call this SIP address
+			//CandyShop.VoiceBridge.init('sip:1000@192.168.1.96');
+
+			// uncomment and edit to use a PBX/PSTN Telephone number for audio-conferencing (mobile/desk phone).
+			// voicebridge will forward this call to the PSTN/PBX gateway
+			//CandyShop.VoiceBridge.init('+447925589467');
+
+			// uncomment and edit to use Flash Player for audio-conferencing (desktop).
+			// voicebridge will call connect two RTMP streams to audio-conference
+			// setup Flash Player with mic permissions with '../plugins/voicebridge/setup.html'
+			CandyShop.VoiceBridge.init('rtmp:');
+
+			Candy.Core.connect();
+		});
+	</script>
+</head>
+<body>
+	<div id="candy"></div>
+	<div style="position:absolute;bottom:0px;" id="candy-audio"></div>
+</body>
+</html>

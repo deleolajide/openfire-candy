@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="CandyPlugin" default="war">
+	<description>Candy Plugin Build</description>
+	<property name="openfire.home" value="D:\Work\Projects\2010.04.21-iTrader\Workspace\openfire_3_7_0\target\openfire" />	
+	<property name="CandyPlugin.dir" value="D:\Work\Projects\2010.04.21-iTrader\Workspace\CandyPlugin" />
+
+	<path id="build.classpath">
+		<fileset dir="${CandyPlugin.dir}\svn\plugin\lib" includes="*.jar"/>		
+		<fileset dir="${openfire.home}\lib" includes="openfire.jar"/>
+		<fileset dir="${openfire.home}\lib" includes="jetty-websocket.jar"/>		
+		<fileset dir="${openfire.home}\lib" includes="servlet.jar"/>
+	</path>
+
+	<target name="init">
+		<!-- create our directories -->
+		<mkdir dir="${CandyPlugin.dir}\build\classes"/>
+	</target>
+	
+	<target name="clean">
+        <delete dir="${CandyPlugin.dir}\build\classes\com"/>
+        <delete dir="${CandyPlugin.dir}\build\classes\local"/>
+        <delete dir="${CandyPlugin.dir}\build\classes\org"/>        
+        <delete file="${openfire.home}\plugins\candy.war"/>
+	</target>
+	
+	<target name="compile" depends="init">
+		<javac debug="true" deprecation="true" srcdir="${CandyPlugin.dir}\svn\src" destdir="${CandyPlugin.dir}\build\classes">
+			<classpath refid="build.classpath"/>
+		</javac>
+	</target>
+
+	<target name="jar" depends="clean, compile">
+		<jar destfile="${CandyPlugin.dir}\svn\plugin\lib\candy.jar">
+			<fileset dir="${CandyPlugin.dir}\build\classes">
+				<include name="**" />
+			</fileset>
+		</jar>			
+	</target>
+	
+	<target name="war" depends="jar">
+		<jar destfile="${openfire.home}\plugins\candy.war">
+			<fileset dir="${CandyPlugin.dir}\svn\plugin">
+				<include name="**" />
+			</fileset>
+		</jar>
+	</target>
+</project>
+
