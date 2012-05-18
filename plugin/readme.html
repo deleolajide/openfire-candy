@@ -81,10 +81,12 @@
 <h2>Installation</h2>
 
 <ol>
-    <li>Install the clientcontrol plugin.</li>
     <li>Stop Openfire.</li>
+    <li>Copy the clientcontrol.jar file to the OPENFIRE_HOME/plugins directory.</li>
+    <li>Copy the sip.jar file to the OPENFIRE_HOME/plugins directory.</li>
     <li>Copy the candy.war file to the OPENFIRE_HOME/plugins directory.</li>
     <li>Restart Openfire.</li>
+    <li>From a browser, go to http://your_openfire-server:7070/candy/candy/plugins/voicebridge/setup.html and give Flash permissions to use your mic. Select the remember checkbox.</li>
     <li>From a browser, go to http://your_openfire-server:7070/candy</li>
     <li>If this page does not appear, please check you log files and post any errors on www.igniterealtime.org</li>
 </ol>
@@ -98,8 +100,18 @@
 
 <h3>Advanced</h3>
 <ul>
-<li>Create or modify any of the folowing system properties</li>
-</ul>
+<li>To setup a PSTN/PBX gateway for external VOIP telephone calls, use the SIP plugin to setup the SIP account and add the follwing two properties to Openfire. Use the standard admin user or any other admin account..
+<p/>
+<table border=1>
+<tr><th>Property</th><th>Default Value</th><th>Description</th></tr>
+<tr><td><b>voicebridge.default.proxy.name</b></td><td>&lt;required&gt;</td><td>A unique name for Voice bridge external PSTN Gateway</td></tr>
+<tr><td><b>voicebridge.default.proxy.username</b></td><td>&lt;required&gt;</td><td>XMPP username used to create the SIP registration by SIP plugin</td></tr>
+</table>
+<p/>
+</li>
+<li>Change the http-bind ports from 7070/7443 to your choice like 80/443</li>
+<li>Create or modify any of the folowing system properties
+<p/>
 <table border=1>
 <tr><th>Property</th><th>Default Value</th><th>Description</th></tr>
 <tr><td><b>candy.webapp.connection</b></td><td>bosh</td><td>Type of xmpp web connection. Use bosh or websockets. Note that you need Openfire 3.7.2 for websockets</td></tr>
@@ -107,24 +119,18 @@
 
 <tr><td><b>voicebridge.rtmp.port</b></td><td>1935</td><td>Listening TCP port for RTMP Server</td></tr>
 <tr><td><b>voicebridge.sip.port</b></td><td>5060</td><td>Listening UDP port for SIP Server</td></tr>
-
 <tr><td><b>voicebridge.default.private.host</b></td><td>localhost</td><td>SIP Server internal network host name or ip address</td></tr>
 <tr><td><b>voicebridge.default.public.host</b></td><td>localhost</td><td>SIP Server external network host name or ip address</td></tr>
 <tr><td><b>voicebridge.default.conf.exten</b></td><td>&lt;required&gt;</td><td>Telephone extension for accessing conference bridge from external PSTN gateway</td></tr>
-<tr><td><b>voicebridge.default.proxy.name</b></td><td>&lt;required&gt;</td><td>A unique name for Voice bridge external PSTN Gateway</td></tr>
-<tr><td><b>voicebridge.default.proxy.sipusername</b></td><td>&lt;required&gt;</td><td>SIP Username for external PSTN Gateway</td></tr>
-<tr><td><b>voicebridge.default.proxy.sipauthuser</b></td><td>&lt;required&gt;</td><td>SIP authentication username for external PSTN Gateway</td></tr>
-<tr><td><b>voicebridge.default.proxy.sippassword</b></td><td>&lt;required&gt;</td><td>SIP password for external PSTN Gateway</td></tr>
-<tr><td><b>voicebridge.default.proxy.sipdisplayname</b></td><td>&lt;required&gt;</td><td>SIP display username for external PSTN Gateway</td></tr>
-<tr><td><b>voicebridge.default.proxy.sipserver</b></td><td>&lt;required&gt;</td><td>SIP registration server/ip address for external PSTN Gateway</td></tr>
-<tr><td><b>voicebridge.default.proxy.outboundproxy</b></td><td>&lt;required&gt;</td><td>SIP outbound proxy host/ip address for external PSTN Gateway</td></tr>
-
 <tr><td><b>voicebridge.rtp.start.port</b></td><td>3200</td><td>RTP Port range start</td></tr>
 <tr><td><b>voicebridge.rtp.end.port</b></td><td>3299</td><td>RTP Port range start</td></tr>
 <tr><td><b>voicebridge.server.log.level</b></td><td>1</td><td>Logging level for VoiceBridge Server. 1-9</td></tr>
 <tr><td><b>voicebridge.sip.log.level</b></td><td>1</td><td>Logging level for SIP Server. 1-9</td></tr>
-
-
 </table>
+<p/>
+</li>
+</ul>
+
+
 </body>
 </html>

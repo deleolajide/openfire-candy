@@ -5,8 +5,8 @@
     <name>Candy Plugin for Openfire</name>
     <description>Candy (Chats Are Not Dead Yet) was developed by Michael Weibel (@weibelm) and Patrick Stadler (@pstadler) on behalf of their employer Amiado Group. <p/>This plugin makes Candy work out of the box, providing support for websockets  and a voicebridge for Flash and SIP audio-conferencing</description>
     <author>Dele Olajide</author>
-    <version>0.0.0.1</version>
-    <minServerVersion>3.7.2</minServerVersion> 
+    <version>0.0.0.2</version>
+    <minServerVersion>3.7.1</minServerVersion> 
 <!--    
     <adminconsole>              
         <tab id="TAB-CANDY" name="Candy" url="candy-properties" description="click to manage Candy" >

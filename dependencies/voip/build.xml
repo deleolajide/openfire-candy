@@ -1,51 +1,28 @@
-<project name="milgra" default="jar" basedir=".">
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="VoiceBridgePlugin" default="jar">
+	<description>VoiceBridge Plugin Build</description>
+	<property name="openfire.home" value="D:\Work\Projects\2010.04.21-iTrader\Workspace\openfire_3_7_0\target\openfire" />
+	<property name="voicebridgePlugin.dir" value="C:\Projects\InspiredProject\inspired\VoipServer" />
 
-	<!-- Application variables -->
-	<property name="app.jar" value="milgra.jar"/>
-	<property name="app.src" value="src"/>
-	<property name="app.bin" value="bin"/>
-
-	<!-- Specify compiler options -->
-	<property name="build.compiler"	value="modern" />
-	<property name="build.debug" value="off" />
-	<property name="build.optimize" value="on" />
-	<property name="build.deprecation" value="on" />
-
-	<!-- Build targets -->
-	<target name="clean" description="Destroys all generated files and dirs.">
-		<delete dir="${app.bin}"/>
-		<delete file="${app.jar}"/>
-	</target>
-
-	<target name="prepare" description="Prepares build environment.">
-		<!-- Make sure needed directories are created -->
-		<mkdir dir="${app.bin}"/>
+	<path id="build.classpath">
+		<fileset dir="C:\Projects\InspiredProject\inspired\plugin\lib" includes="*.jar"/>
+		<fileset dir="${openfire.home}\lib" includes="openfire.jar"/>
+		<fileset dir="${openfire.home}\lib" includes="servlet.jar"/>
+	</path>
 		
-		<!-- Set up build classpath -->
-		<path id="buildclasspath">
-			<!-- Include this application's compiled classes -->
-			<pathelement location="${app.bin}"/>
-		</path>
-			
-		<pathconvert pathsep=":" property="build.classpath" refid="buildclasspath"/>
+	<target name="compile">
+		<javac debug="true" deprecation="true" srcdir="${voicebridgePlugin.dir}" destdir="${voicebridgePlugin.dir}">
+			<classpath refid="build.classpath"/>
+		</javac>
 	</target>
 
-	<target name="compile" depends="prepare" description="Compiles Java code, output goes to the build dir.">
-		<javac srcdir="${app.src}"
-			destdir="${app.bin}"
-			classpath="${build.classpath}"
-			debug="${build.debug}"
-			optimize="${build.optimize}"
-			deprecation="${build.deprecation}"
-		/>
-		
-		<copy todir="${app.bin}">
-			<fileset dir="${app.src}" includes="**/*.properties, **/*.xml"/>
-		</copy>
+	<target name="jar" depends="compile">
+		<jar destfile="${voicebridgePlugin.dir}\voip.jar">
+			<fileset dir="${voicebridgePlugin.dir}">
+				<include name="**" />
+			</fileset>
+		</jar>
 	</target>
-
-	<target name="jar" depends="compile" description="Gathers compiled Java classes into a JAR file.">
-		<jar destfile="./${app.jar}" basedir="${app.bin}"/>
-	</target>
-
+	
 </project>
+
