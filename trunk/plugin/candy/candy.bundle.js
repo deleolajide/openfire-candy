@@ -1968,10 +1968,10 @@ Candy.Core.Event = (function(self, Strophe, $, observable) {
 			if(fromJid !== Strophe.getDomainFromJid(fromJid) && (type === 'groupchat' || type === 'chat' || type === 'error')) {
 				self.Jabber.Room.Message(msg);
 			// Admin message
-			} else if(!toJid && fromJid === Strophe.getDomainFromJid(fromJid) && fromJid.indexOf('pubsub.') == -1) {
+			} else if(!toJid && fromJid === Strophe.getDomainFromJid(fromJid) && fromJid.indexOf('pubsub.') == -1 && fromJid.indexOf('openlink.') == -1) {
 				self.notifyObservers(self.KEYS.CHAT, { type: (type || 'message'), message: msg.children('body').text() });
 			// Server Message
-			} else if(toJid && fromJid === Strophe.getDomainFromJid(fromJid) && fromJid.indexOf('pubsub.') == -1) {
+			} else if(toJid && fromJid === Strophe.getDomainFromJid(fromJid) && fromJid.indexOf('pubsub.') == -1 && fromJid.indexOf('openlink.') == -1) {
 				self.notifyObservers(self.KEYS.CHAT, { type: (type || 'message'), subject: msg.children('subject').text(), message: msg.children('body').text() });
 			}
 			return true;

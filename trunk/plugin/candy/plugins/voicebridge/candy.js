@@ -28,15 +28,7 @@ CandyShop.VoiceBridge = (function(self, Candy, $) {
 		Candy.View.Event.Room.onPresenceChange = handleOnPresenceChange;
 
 		connection = Candy.Core.getConnection();
-		Candy.Core.addHandler(openlinkCallback, null, 'message');
-
-		if (sipURL != null && sipURL.indexOf('rtmp:') > -1)
-		{		
-			flash = new SWFObject("../plugins/voicebridge/confphone.swf?rtmpUrl=rtmp:/voicebridge&recieverStream=reciever" + uid + "&senderStream=sender" + uid, "voiceBridgeID", "1", "1", "11");
-			flash.addParam("swLiveConnect", "true");
-			flash.addParam("name", "voiceBridgeID");
-			flash.write("candy-audio");
-		}
+		Candy.Core.addHandler(openlinkCallback, null, 'message');		
 	};
 		
 	var handleOnAdd = function(arg) {
@@ -74,7 +66,9 @@ CandyShop.VoiceBridge = (function(self, Candy, $) {
 	
 				}
 				
-				voiceJid[oldJid] = false;				
+				voiceJid[oldJid] = false;
+				
+				document.getElementById("candy-audio").innerHTML = "<p />"
 
 
 
@@ -92,9 +86,15 @@ CandyShop.VoiceBridge = (function(self, Candy, $) {
 		
 				}				   
 
-				if (sipURL.indexOf('rtmp:') > -1)
+				if (sipURL.indexOf('rtmp:') > -1 || sipURL.indexOf('rtmfp:') > -1)
 				{	
-					var action1 = ['protocol', participantId, "RTMP"];
+					if (sipURL.indexOf('rtmp:') > -1)
+					{
+						var action1 = ['protocol', participantId, "RTMP"];
+					} else {
+					
+						var action1 = ['protocol', participantId, "RTMFP"];
+					}
 					var action2 = ['SetConference', participantId, ConfName];
 					var action3 = ['RtmpSendStream', participantId, "sender" + uid];
 					var action4 = ['RtmpRecieveStream', participantId, "reciever" + uid];	
@@ -113,6 +113,23 @@ CandyShop.VoiceBridge = (function(self, Candy, $) {
 				connection.openlink.manageVoiceBridge(openlinkResponse, connection.jid, actions);
 				
 				voiceJid[newJid] = true;
+				
+
+				if (sipURL != null && sipURL.indexOf('rtmp:') > -1)
+				{		
+					flash = new SWFObject("../plugins/voicebridge/confphone.swf?rtmpUrl=rtmp:/voicebridge&recieverStream=reciever" + uid + "&senderStream=sender" + uid, "voiceBridgeID", "1", "1", "11");
+					flash.addParam("swLiveConnect", "true");
+					flash.addParam("name", "voiceBridgeID");
+					flash.write("candy-audio");
+				}
+
+				else if (sipURL != null && sipURL.indexOf('rtmfp:') > -1)
+				{		
+					flash = new SWFObject("../plugins/voicebridge/confphone2.swf?recieverStream=reciever" + uid + "&senderStream=sender" + uid + "&rtmpUrl=rtmfp:/", "voiceBridgeID", "1", "1", "11");
+					flash.addParam("swLiveConnect", "true");
+					flash.addParam("name", "voiceBridgeID");
+					flash.write("candy-audio");
+				}				
 				
 			}			
 		}

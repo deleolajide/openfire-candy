@@ -61,10 +61,50 @@
 			// uncomment and edit to use Flash Player for audio-conferencing (desktop).
 			// voicebridge will call connect two RTMP streams to audio-conference
 			// setup Flash Player with mic permissions with '../plugins/voicebridge/setup.html'
-			CandyShop.VoiceBridge.init('rtmp:');
+			CandyShop.VoiceBridge.init(getPageParameter('sip', 'rtmp:'));
 
-			Candy.Core.connect();
+			Candy.Core.connect(window.location.hostname);
 		});
+
+		function getParameter(string, parm, delim)
+		{
+			 if (string.length == 0)
+			 {
+				return '';
+			 }
+
+			 var sPos = string.indexOf(parm + "=");
+
+			 if (sPos == -1) {return '';}
+
+			 sPos = sPos + parm.length + 1;
+
+			 var ePos = string.indexOf(delim, sPos);
+
+			 if (ePos == -1) {
+				ePos = string.length;
+			 }
+
+			 return unescape(string.substring(sPos, ePos));
+		}
+
+		function getPageParameter(parameterName, defaultValue) {
+
+			var s = self.location.search;
+
+			if ((s == null) || (s.length < 1)) {
+				return defaultValue;
+			}
+
+			s = getParameter(s, parameterName, '&');
+
+			if ((s == null) || (s.length < 1)) {
+				s = defaultValue;
+			}
+
+			return s;
+		}
+
 	</script>
 </head>
 <body>
