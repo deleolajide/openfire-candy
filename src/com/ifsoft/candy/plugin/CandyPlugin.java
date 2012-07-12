@@ -55,6 +55,8 @@ public class CandyPlugin implements Plugin {
 	{
 		Log.info( "candy plugin : initializePlugin");
 
+		String appName = JiveGlobals.getProperty("candy.webapp.name", "candy");
+
 		// create the context for candy
         try {
 			ContextHandlerCollection contexts = HttpBindManager.getInstance().getContexts();
@@ -62,11 +64,15 @@ public class CandyPlugin implements Plugin {
 
 				if ("websockets".equals(JiveGlobals.getProperty("candy.webapp.connection", "bosh")))
 				{
-					ServletContextHandler context = new ServletContextHandler(contexts, "/" + JiveGlobals.getProperty("candy.webapp.name", "candy"), ServletContextHandler.SESSIONS);
+					Log.info( "candy plugin : initialize Websockets " + appName);
+
+					ServletContextHandler context = new ServletContextHandler(contexts, "/" + appName, ServletContextHandler.SESSIONS);
 					context.addServlet(new ServletHolder(new XMPPServlet()),"/server");
 				}
 
-				WebAppContext context2 = new WebAppContext(contexts, pluginDirectory.getPath(), "/" + JiveGlobals.getProperty("candy.webapp.name", "candy"));
+				Log.info( "candy plugin : initialize Web app " + appName);
+
+				WebAppContext context2 = new WebAppContext(contexts, pluginDirectory.getPath(), "/" + appName);
 				context2.setWelcomeFiles(new String[]{"index.html"});
 
 				Log.info("candy plugin : starting Openlink Component");
@@ -99,15 +105,19 @@ public class CandyPlugin implements Plugin {
 		Iterator it = sockets.entrySet().iterator();
 		while ( it.hasNext() ) {
 			try {
-				//LocalClientSession session = ( LocalClientSession ) it.next();
-				//SessionManager.getInstance().removeSession( session );
-				//session = null;
+				LocalClientSession session = ( LocalClientSession ) it.next();
+
+				if (session instanceof LocalClientSession)
+				{
+					SessionManager.getInstance().removeSession( session );
+				}
+				session = null;
 
 			} catch ( Exception e ) {
 				Log.error( "An error occurred while attempting to clear a session while destroying the candy plugin", e );
 			}
 		}
-		// clear the candy cache
+
 		sockets.clear();
 		try {
 			/*
