@@ -108,7 +108,6 @@ public class CandyAdmin extends HttpServlet
 			}
 			out.println("");
 			out.println("Use the form below to edit Candy Properties.<br>");
-			out.println("Total websocket connections: <strong>" + plugin.getCount() + "</strong>" );
 			out.println("</p>");
 			out.println("<form action=\"candy-properties\" method=\"get\">");
 
